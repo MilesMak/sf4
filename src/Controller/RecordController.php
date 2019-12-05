@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Record;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,12 +15,10 @@ class RecordController extends AbstractController
      * Exemple : /record/42
      * @Route("/{id}", name="page")
      */
-    public function index($id)
+    public function index($id, Record $record)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/RecordController.php',
-            'id' => $id
+        return $this->render('record/record_page.html.twig', [
+            'record' => $record
         ]);
     }
 }
