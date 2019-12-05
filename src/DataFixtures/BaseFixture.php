@@ -1,4 +1,4 @@
-<?php
+<?php0
 
 
 namespace App\DataFixtures;
@@ -18,30 +18,31 @@ abstract class BaseFixture extends Fixture
     /** Liste des références aux entités générées par les fixtures */
     private $references = [];
 
-    // Méthode à implémenter par les classes enfant dans laquelle générer des fausses données
+    // Méthode à implémenter par les classes enfant
+    // dans laquelle générer les fausses données
     abstract protected function loadData(ObjectManager $manager);
 
     // Méthode imposée par Doctrine
     public function load(ObjectManager $manager)
     {
-        // Enregistrement du manager et instanciation du Faker
+        // Enregistrement du Manager et instanciation de Faker
         $this->manager = $manager;
         $this->faker = Factory::create('fr_FR');
 
-        // Appel de la méthode pour générer des données
+        // Appel de la méthode pour générer les données
         $this->loadData($manager);
     }
 
     /**
      * Créer plusieurs entités
-     * @param int $count                Nombre d'entités à créer
-     * @param string $groupName         Nom associé aux entités générées
-     * @param callable $factory         Fonction pour créer une entité
+     * @param int $count        nombre d'entités à créer
+     * @param string $groupName nom associé aux entités générées
+     * @param callable $factory fonction pour créer 1 entité
      */
     protected function createMany(int $count, string $groupName, callable $factory)
     {
         // Exécuter $factory $count fois
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < $count; $i++) {
             // La $factory doit retourner l'entité créée
             $entity = $factory($i);
 
@@ -62,18 +63,39 @@ abstract class BaseFixture extends Fixture
      */
     protected function getRandomReference(string $groupName)
     {
-        // Si les références ne sont pas présentes dans la propriété :
+        // Si les references ne sont pas présentes dans la propriété:
         if (!isset($this->references[$groupName])) {
+            $this->references[$groupName] = [];
+
             // Récupération des références
             foreach ($this->referenceRepository->getReferences() as $key => $ref) {
                 if (strpos($key, $groupName . '_') === 0) {
-                    $this->references[$groupName][] = $ref;
+                    $this->references[$groupName][] = $key;
                 }
             }
+        }
+
+        // Vérifier que des références ont été enregistrées
+        if (empty($this->references[$groupName])) {
+            throw new \Exception(sprintf('Aucune référence trouvée pour "%s"', $groupName));
         }
 
         // Retourner une référence aléatoire
         $randomReferenceKey = $this->faker->randomElement($this->references[$groupName]);
         return $this->getReference($randomReferenceKey);
+    }
+
+    /**
+     * Récupérer plusieurs entités
+     */
+    protected function getRandomReferences(string $groupName, int $amount)
+    {
+        $references = [];
+
+        while (count($references) < $amount) {
+            $references[] = $this->getRandomReference($groupName);
+        }
+
+        return $references;
     }
 }
