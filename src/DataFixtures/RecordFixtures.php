@@ -22,6 +22,11 @@ class RecordFixtures extends BaseFixture implements DependentFixtureInterface
                 ->setArtist($this->getRandomReference('artist'))
             ;
 
+            // 75% des albums auront un Label de défini
+            if ($this->faker->boolean(75)) {
+                $record->setLabel($this->getRandomReference('label'));
+            }
+
             return $record;
         });
 
@@ -35,6 +40,7 @@ class RecordFixtures extends BaseFixture implements DependentFixtureInterface
     {
         return [
             ArtistFixtures::class,
+            LabelFixtures::class,
         ];
     }
 }
