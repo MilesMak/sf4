@@ -52,13 +52,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'email' => $request->request->get('email'),
+            'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['email']
+            $credentials['username']
         );
 
         return $credentials;
@@ -74,11 +74,18 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        // Récupération de UserRepository
+        $userRepository = $this->entityManager->getRepository(User::class);
+        // Récupérer par email OU par pseudo
+        $user = $userRepository->findOneBy(['email' => $credentials['username']])
+            ?? $userRepository->findOneBy(['pseudo' => $credentials['username']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Adresse email inconnue !');
+            throw new CustomUserMessageAuthenticationException(sprintf(
+                'Aucun utilisateur trouvé pour "%s"',
+                $credentials['username']
+            ));
         }
 
         return $user;
