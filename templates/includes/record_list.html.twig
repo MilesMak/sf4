@@ -18,12 +18,16 @@
                         <br>
                         <small>
                             <strong>Artiste:</strong>
-                            <a href="{{ path('artist_page', {id: record.artist.id}) }}">{{ record.artist.name }}</a>
+                            <a href="{{ path('artist_page', {id: record.artist.id}) }}">
+                                {{ record.artist.name }}
+                            </a>
                         </small><br>
                         <small>
                             <strong>Label:</strong>
                             {% if record.label %}
-                                <a href="{{ path('label_page', {id: record.label.id}) }}">Nom du Label</a>
+                                <a href="{{ path('label_page', {id: record.label.id}) }}">
+                                    {{ record.label.name }}
+                                </a>
                             {% else %}
                                 Autoproduction.
                             {% endif %}

@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecordController extends AbstractController
 {
     /**
-     * Exemple : /record/42
+     * Exemple: /record/42
      * @Route("/{id}", name="page")
      */
-    public function index($id, Record $record)
+    public function index(Record $record)
     {
         return $this->render('record/record_page.html.twig', [
             'record' => $record

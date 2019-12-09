@@ -4,7 +4,7 @@ Etapes à suivre pour installer.
 
 1) Cloner le repo Git
 ```sh
-git clone https://github.com/MilesMak/sf4.git
+git clone https://github.com/AymDev/sf4.git
 ```
 
 2) Installer les dépendances PHP

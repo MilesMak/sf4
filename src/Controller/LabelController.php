@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Label;
+use App\Repository\LabelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,8 +15,10 @@ class LabelController extends AbstractController
     /**
      * @Route("/{id}", name="page")
      */
-    public function index(Label $label)
+    public function index($id, LabelRepository $labelRepository)
     {
+        $label = $labelRepository->find($id);
+
         return $this->render('label/label_page.html.twig', [
             'label' => $label
         ]);

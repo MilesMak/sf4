@@ -20,14 +20,14 @@ class RecordRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupérer les sorties de moins d'1 mois
+     * Récupérer les sorties de moins d'un mois
      */
     public function getLastMonthReleases()
     {
         return $this->createQueryBuilder('r')
             ->where('r.releasedAt > :last_month')
             ->setParameter('last_month', new \DateTime('-1 month'))
-            ->orderBy('r.releasedAt','DESC')
+            ->orderBy('r.releasedAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

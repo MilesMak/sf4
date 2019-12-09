@@ -17,8 +17,9 @@ class RankingController extends AbstractController
     public function index(RecordRepository $recordRepository)
     {
         $releases = $recordRepository->getLastMonthReleases();
+
         return $this->render('ranking/news.html.twig', [
             'releases' => $releases
-    ]);
+        ]);
     }
 }

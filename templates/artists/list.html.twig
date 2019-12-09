@@ -1,3 +1,4 @@
+{# templates/artists/list.html.twig #}
 {% extends "_template.html.twig" %}
 
 {% block title %}
@@ -5,9 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    {# div.section>h2.title{Liste des artistes} #}
     <div class="section">
-        <h2 class="title">Artistes : {{ artist_list|length }}</h2>
+        <h2 class="title">Artistes: {{ artist_list|length }}</h2>
 
         <div class="columns is-multiline">
             {% for artist in artist_list %}
@@ -28,7 +28,7 @@
                                             <strong>{{ artist.name }}</strong>
                                         </a>
                                         <br>
-                                        <small>Nombre d'albums : {{ artist.records|length }}</small>
+                                        <small>Nombre d'albums: {{ artist.records|length }}</small>
                                         <br>
                                         {{ artist.description }}
                                     </p>

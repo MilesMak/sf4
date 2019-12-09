@@ -13,13 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArtistController extends AbstractController
 {
     /**
-     * URI /artist-list
-     * Nom : artist_list
+     * URI: /artist-list
+     * Nom: artist_list
      * @Route("-list", name="list")
      */
     public function index(ArtistRepository $artistRepository)
     {
-
         return $this->render('artists/list.html.twig', [
             'artist_list' => $artistRepository->findAll()
         ]);

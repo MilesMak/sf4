@@ -1,4 +1,4 @@
-<?php0
+<?php
 
 
 namespace App\DataFixtures;

@@ -25,9 +25,9 @@ class ArtistRepository extends ServiceEntityRepository
     public function findDjs()
     {
         // Utilisation du Query Builder
-        return $this->createQueryBuilder('a') // Définir un alias pour l'entité
+        return $this->createQueryBuilder('a')   // Définir un alias pour l'entité
             ->where('a.name LIKE :dj_name')
-            ->setParameter('dj_name','DJ %')
+            ->setParameter('dj_name', 'DJ %')
             ->getQuery()
             ->getResult();
     }

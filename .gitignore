@@ -19,5 +19,7 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-# Ignorer le dossier "idea" créé par PHPStorm
-/.idea/
+# Ignorer le dossier créé par PHPStorm
+/.idea
+docker-compose.yml
+
