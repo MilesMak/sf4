@@ -1,9 +1,12 @@
 <?php
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("email", message="Cette adresse email est déjà utilisée.")
+ * @UniqueEntity("pseudo", message="Ce pseudo n'est pas disponible.")
  */
 class User implements UserInterface
 {
@@ -30,6 +33,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=40, unique=true)
      */
     private $pseudo;
+
     public function getId(): ?int
     {
         return $this->id;
