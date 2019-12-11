@@ -46,6 +46,7 @@ class Record
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="record", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OrderBy({"createdAt"="DESC"})
      */
     private $notes;
 
@@ -148,5 +149,24 @@ class Record
         }
 
         return $this;
+    }
+
+    public function getAverageNote() : ?float
+    {
+        // Pas de note : null
+        if ($this->notes->isEmpty()) {
+            return null;
+        }
+
+        // Extraire les valeurs des notes
+        $values = $this->notes->map(function (Note $note) {
+           return $note->getValue();
+        });
+
+        // Somme des notes
+        $sum = array_sum($values->getValues());
+        // Moyenne
+        $average = $sum / $this->notes->count();
+        return $average;
     }
 }
