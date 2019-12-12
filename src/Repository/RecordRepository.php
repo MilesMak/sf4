@@ -32,6 +32,23 @@ class RecordRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Récupérer le top 100
+     * (Records les mieux notés sortis il y a moins d'un an)
+     */
+    public function getBestRatedOfYear()
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.notes','n')
+            ->where('r.releasedAt > :last_year')
+            ->setParameter('last_year', new \DateTime('-1 year'))
+            ->groupBy('r.id')
+            ->orderBy('AVG(n.value)', 'DESC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Record[] Returns an array of Record objects
     //  */
