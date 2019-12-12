@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email", message="Cette adresse email est déjà utilisée.")
  * @UniqueEntity("pseudo", message="Ce pseudo n'est pas disponible.")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -41,6 +42,16 @@ class User implements UserInterface
      */
     private $notes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isConfirmed;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $securityToken;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -52,6 +63,17 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        // Définir un jeton s'il n'y en a pas
+        if ($this->securityToken === null) {
+            $this->renewToken();
+        }
     }
 
     public function getId(): ?int
@@ -159,5 +181,39 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getIsConfirmed(): ?bool
+    {
+        return $this->isConfirmed;
+    }
+
+    public function setIsConfirmed(bool $isConfirmed): self
+    {
+        $this->isConfirmed = $isConfirmed;
+
+        return $this;
+    }
+
+    public function getSecurityToken(): ?string
+    {
+        return $this->securityToken;
+    }
+
+    public function setSecurityToken(string $securityToken): self
+    {
+        $this->securityToken = $securityToken;
+
+        return $this;
+    }
+
+    /**
+     * Renouveller le jeton de sécurité
+     */
+    public function renewToken() : self
+    {
+        $token = bin2hex(random_bytes(16));
+
+        return $this->setSecurityToken($token);
     }
 }

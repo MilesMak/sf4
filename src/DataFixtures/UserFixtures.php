@@ -38,6 +38,7 @@ class UserFixtures extends BaseFixture
                 ->setEmail(sprintf('user%d@mail.org', $num))
                 ->setPassword($this->encoder->encodePassword($user, 'user' . $num))
                 ->setPseudo('user_' . $num)
+                ->setIsConfirmed(true)
             ;
 
             return $user;
