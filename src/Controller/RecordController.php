@@ -7,10 +7,12 @@ use App\Entity\Record;
 use App\Form\NoteFormType;
 use App\Repository\NoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+
 
 /**
  * @Route("/record", name="record_")
@@ -61,5 +63,14 @@ class RecordController extends AbstractController
             'record' => $record,
             'note_form' => isset($noteForm) ? $noteForm->createView() : null
         ]);
+    }
+
+    /**
+     * @Route("/note-delete/{id}", name="delete_note")
+     * @IsGranted("NOTE_DELETE", subject="note")
+     */
+    public function deleteNote(Note $note)
+    {
+        dd('Vous avez le droit de suppression de la note !');
     }
 }
