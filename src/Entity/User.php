@@ -74,6 +74,11 @@ class User implements UserInterface
         if ($this->securityToken === null) {
             $this->renewToken();
         }
+
+        // Attribuer un False par défaut à isConfirmed
+        if ($this->isConfirmed === null) {
+            $this->setIsConfirmed(false);
+        }
     }
 
     public function getId(): ?int

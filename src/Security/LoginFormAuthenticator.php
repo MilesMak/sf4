@@ -92,7 +92,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     }
 
     /**
-     * Vérifier le mot de passe
+     * Vérifier le mot de passe et la confirmation du compte utilisateur
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
@@ -102,6 +102,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         // Mauvais mot de passe
         if (!$validation) {
             throw new CustomUserMessageAuthenticationException('Mot de passe incorrect !');
+        }
+        /** @var User $user */
+        // Compte non vérifié
+        if ($user->getIsConfirmed() === false) {
+            throw new CustomUserMessageAuthenticationException('Veuillez confirmer votre email.');
         }
 
         return $validation;
