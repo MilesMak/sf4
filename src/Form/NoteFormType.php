@@ -16,9 +16,9 @@ class NoteFormType extends AbstractType
     {
         $builder
             ->add('value', ChoiceType::class, [
-                'choices' => range(0,10),
+                'choices' => range(0, 10),
             ])
-            ->add('comment',TextareaType::class, [
+            ->add('comment', TextareaType::class, [
                 'required' => false,
                 'constraints' => [
                     new Length([

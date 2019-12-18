@@ -39,7 +39,7 @@ class RecordRepository extends ServiceEntityRepository
     public function getBestRatedOfYear()
     {
         return $this->createQueryBuilder('r')
-            ->innerJoin('r.notes','n')
+            ->innerJoin('r.notes', 'n')
             ->where('r.releasedAt > :last_year')
             ->setParameter('last_year', new \DateTime('-1 year'))
             ->groupBy('r.id')

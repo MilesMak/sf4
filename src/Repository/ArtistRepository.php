@@ -26,7 +26,7 @@ class ArtistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->where('a.name LIKE :name')
-            ->setParameter('name','%' . $name . '%')
+            ->setParameter('name', '%' . $name . '%')
             ->getQuery()
             ->getResult();
     }
@@ -44,7 +44,7 @@ class ArtistRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-/*    // /**
+    // /**
     //  * @return Artist[] Returns an array of Artist objects
     //  */
     /*

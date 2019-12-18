@@ -45,7 +45,7 @@ class Note
     private $createdAt;
 
     /**
-     * Méthode appelée avant le premier enregistrement de l'entité
+     * Méthode appelée avant le 1er enregistrement de l'entité
      * @ORM\PrePersist()
      */
     public function prePersist()

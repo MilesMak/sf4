@@ -21,7 +21,7 @@ class UserProfileFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank(['message' => 'Veuillez entrer un email.']),
-                    new Email(['message' => 'Veuillez entrer une adresse valide.'])
+                    new Email(['message' => 'Veuillez rentrer une adresse valide.'])
                 ]
             ])
             ->add('pseudo', TextType::class, [

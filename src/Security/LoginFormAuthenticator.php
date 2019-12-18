@@ -78,7 +78,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $userRepository = $this->entityManager->getRepository(User::class);
         // Récupérer par email OU par pseudo
         $user = $userRepository->findOneBy(['email' => $credentials['username']])
-            ?? $userRepository->findOneBy(['pseudo' => $credentials['username']]);
+                ?? $userRepository->findOneBy(['pseudo' => $credentials['username']]);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -92,21 +92,22 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     }
 
     /**
-     * Vérifier le mot de passe et la confirmation du compte utilisateur
+     * Vérifier le mot de passe
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
+        // Le compte n'est pas encore confirmé
+        /** @var User $user */
+        if (!$user->getIsConfirmed()) {
+            throw new CustomUserMessageAuthenticationException('Vous devez confirmer votre compte avant de pouvoir vous connecter');
+        }
+
         // booléen = mot de passe valide ?
         $validation = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
 
         // Mauvais mot de passe
         if (!$validation) {
             throw new CustomUserMessageAuthenticationException('Mot de passe incorrect !');
-        }
-        /** @var User $user */
-        // Compte non vérifié
-        if ($user->getIsConfirmed() === false) {
-            throw new CustomUserMessageAuthenticationException('Veuillez confirmer votre email.');
         }
 
         return $validation;
@@ -129,7 +130,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             return new RedirectResponse($targetPath);
         }
 
-        // For example :
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 

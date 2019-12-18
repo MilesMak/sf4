@@ -27,6 +27,7 @@ class UserFixtures extends BaseFixture
                 ->setRoles(['ROLE_ADMIN'])
                 ->setPassword($this->encoder->encodePassword($admin, 'admin' . $num))
                 ->setPseudo('admin_' . $num)
+                ->setIsConfirmed(true)
             ;
 
             return $admin;

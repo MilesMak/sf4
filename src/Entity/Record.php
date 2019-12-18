@@ -153,14 +153,14 @@ class Record
 
     public function getAverageNote() : ?float
     {
-        // Pas de note : null
+        // Pas de note: null
         if ($this->notes->isEmpty()) {
             return null;
         }
 
         // Extraire les valeurs des notes
         $values = $this->notes->map(function (Note $note) {
-           return $note->getValue();
+            return $note->getValue();
         });
 
         // Somme des notes

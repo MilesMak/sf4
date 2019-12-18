@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-
 /**
  * @Route("/record", name="record_")
  */
@@ -38,7 +37,7 @@ class RecordController extends AbstractController
                 'user' => $this->getUser()
             ]);
 
-            // Pas de Note existante : initialisation
+            // Pas de Note existante: initialisation
             if ($note === null) {
                 $note = (new Note())
                     ->setRecord($record)

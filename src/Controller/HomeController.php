@@ -18,7 +18,6 @@ class HomeController extends AbstractController
         // Récupération du top 100
         $top = $recordRepository->getBestRatedOfYear();
 
-
         return $this->render('index.html.twig', [
             'top' => $top,
         ]);

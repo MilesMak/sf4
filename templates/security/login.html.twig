@@ -21,6 +21,9 @@
                 <div class="notification is-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
+            {# Affichage des messages flash #}
+            {% include 'includes/flash_message.html.twig' %}
+
             {# formulaire de connexion #}
             <form method="post">
                 <div class="field">
@@ -44,6 +47,22 @@
                     Connexion
                 </button>
             </form>
+
+            <hr>
+            <div class="level">
+                <div class="level-left">
+                    <a href="{{ path('send_confirmation') }}" class="button is-info is-small">
+                        <i class="far fa-envelope"></i>&nbsp;
+                        Pas reçu ?
+                    </a>
+                </div>
+                <div class="level-right">
+                    <a href="{{ path('lost_password') }}" class="button is-info is-small">
+                        <i class="fas fa-key"></i>&nbsp;
+                        Mot de passe perdu ?
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

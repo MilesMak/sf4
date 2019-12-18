@@ -26,12 +26,12 @@ class ArtistController extends AbstractController
         // Traitement de la requête par le formulaire
         $form->handleRequest($request);
 
-        // Si le formulaire est envoyé et valide
+        // Si le formulaire est envoyé & valide
         if ($form->isSubmitted() && $form->isValid()) {
             $recherche = $form->getData()['name'];
 
             $list = $artistRepository->searchByName($recherche);
-            $title = sprintf('Résultat pour "%s"', $recherche);
+            $title = sprintf('Résultats pour "%s"', $recherche);
 
         } else {
             $list = $artistRepository->findAll();

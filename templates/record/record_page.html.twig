@@ -38,22 +38,22 @@
         </h3>
 
         {% include 'includes/flash_message.html.twig' %}
-
+        
         {# afficher le formulaire seulement si note_form n'est pas null #}
         {% if note_form is not null %}
             <div class="section">
                 {{ form_start(note_form) }}
-                {{ form_row(note_form.value, {
-                    label: 'Votre note'
-                }) }}
+                    {{ form_row(note_form.value, {
+                        label: 'Votre note'
+                    }) }}
 
-                {{ form_row(note_form.comment, {
-                    label: 'Commentaire (facultatif)'
-                }) }}
+                    {{ form_row(note_form.comment, {
+                        label: 'Commentaire (facultatif)'
+                    }) }}
 
-                <button class="button is-success" type="submit">
-                    Noter
-                </button>
+                    <button class="button is-success" type="submit">
+                        Noter
+                    </button>
                 {{ form_end(note_form) }}
             </div>
         {% endif %}
@@ -77,7 +77,7 @@
                                 Supprimer
                             </a>
                         {% endif %}
-
+                        
                         Par <b>{{ note.user.pseudo }}</b>
                         le <b>{{ note.createdAt|date('d/m/Y') }}</b>
                         à <b>{{ note.createdAt|date('H:i') }}</b>.
@@ -87,3 +87,4 @@
         {% endfor %}
     </div>
 {% endblock %}
+

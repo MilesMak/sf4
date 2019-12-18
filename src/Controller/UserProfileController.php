@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use App\Form\UserProfileFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,13 +22,13 @@ class UserProfileController extends AbstractController
     {
         // Récupération de l'utilisateur courant
         $user = $this->getUser();
-        // Passage de l'utilisateur courant au formulaire pour pré-remplir les champs
+        // Passage de l'utilisateur au formulaire pour pré-remplir les champs
         $profileForm = $this->createForm(UserProfileFormType::class, $user);
         $profileForm->handleRequest($request);
 
-        // Vérification de l'envoi et de la validité du formulaire
+        // Vérification de validité
         if ($profileForm->isSubmitted() && $profileForm->isValid()) {
-            // Formulaire lié à une classe entité : getData() retourne l'entité
+            // Formulaire lié à une classe entité: getData() retourne l'entité
             $user = $profileForm->getData();
 
             // Mise à jour de l'entité en BDD
@@ -38,15 +36,11 @@ class UserProfileController extends AbstractController
             $em->flush();
 
             // Ajout d'un message flash
-            $this->addFlash('succes','Votre profile a été mis à jour.');
+            $this->addFlash('success', 'Votre profil a été mis à jour.');
         }
+
         return $this->render('user/profile.html.twig', [
             'profile_form' => $profileForm->createView()
         ]);
     }
-
 }
-
-/**
- * User (0,n) -- (1,1) Note (1,1) -- (0,n) Record
- */
